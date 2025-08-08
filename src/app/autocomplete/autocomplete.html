@@ -1,0 +1,30 @@
+<mat-form-field appearance="outline" class="w-100" dir="rtl"  >
+
+  <mat-label  class="w-100">{{ config.label }}</mat-label>
+
+  <input type="text"
+         matInput
+         [formControl]="control"
+         [matAutocomplete]="auto"
+         [disabled]="loading()"
+         autocomplete="off"
+         class="rtl-input">
+
+  <mat-spinner  *ngIf="loading()" diameter="20" matSuffix></mat-spinner>
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [displayWith]="displayFn"
+    (optionSelected)="select.emit($event.option.value)"
+    class="rtl-autocomplete">
+
+    <mat-option *ngFor="let item of items()" [value]="item">
+      {{ item[config.bindLabel] }}
+    </mat-option>
+
+    <mat-option *ngIf="items().length === 0 && !loading() && control.value" disabled>
+      نتیجه‌ای یافت نشد
+    </mat-option>
+
+  </mat-autocomplete>
+</mat-form-field>
