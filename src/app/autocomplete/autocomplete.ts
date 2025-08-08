@@ -2,7 +2,7 @@ import { E } from '@angular/cdk/keycodes';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ImplicitReceiver } from '@angular/compiler';
-import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal, Type } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
@@ -52,16 +52,22 @@ export class Autocomplete implements OnInit {
   public displayFn = (item: any) => item?.[this.config.bindLabel] || ''
 
 
+  selectOption(event: any) {
+    console.log(event.option.value[this.config.bindValue],event.option.value , 'select');
+
+    this.select.emit(event.option.value[this.config.bindValue]);
+  }
+
   ngOnInit(): void {
     this.control.valueChanges
     .pipe(
       debounceTime(this.config.debounceTime),
       map(value => {
         this.loading.set(false)
-        if(!value) return '';
-        return value.trim();
+        if(!value || typeof value !== 'string') return '';
+        return value?.trim();
       }),
-      filter(value => typeof value === 'string' && (value.length > this.config.minLength)),
+      filter(value => value.length > this.config.minLength),
       tap(_ => {
         this.loading.set(true)
         this.items.set([])

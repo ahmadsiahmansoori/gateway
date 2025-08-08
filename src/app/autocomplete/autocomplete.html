@@ -1,6 +1,6 @@
-<mat-form-field appearance="outline" class="w-100" dir="rtl">
+<mat-form-field appearance="outline" class="w-100">
 
-  <mat-label>{{ config.label }}</mat-label>
+  <mat-label  class="w-100">{{ config.label }}</mat-label>
 
   <input type="text"
          matInput
@@ -14,7 +14,7 @@
   <mat-autocomplete
     #auto="matAutocomplete"
     [displayWith]="displayFn"
-    (optionSelected)="select.emit($event.option.value)">
+    (optionSelected)="select.emit($event.option.value[config.bindValue])">
 
     <mat-option *ngFor="let item of items()" [value]="item">
       {{ item[config.bindLabel] }}
