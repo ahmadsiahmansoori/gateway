@@ -1,12 +1,28 @@
-mat-form-field {
+/* .mat-form-field {
   width: 100%;
-  direction: rtl; /* این باید باشه */
+  direction: rtl;
   text-align: right;
 }
 
-mat-label {
+.mat-label {
   font-size: 14px;
   direction: rtl;
   text-align: right;
-  transform-origin: right !important; /* این باعث میشه label درست حرکت کنه */
+  transform-origin: right !important;
 }
+
+
+.mat-form-field {
+  direction: rtl;
+  text-align: right;
+}
+
+.mat-form-field-label {
+  direction: rtl;
+  text-align: right;
+  transform-origin: right !important;
+}
+
+.mat-select-value {
+  direction: rtl;
+} */
