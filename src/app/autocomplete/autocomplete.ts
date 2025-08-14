@@ -9,7 +9,17 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { catchError, debounceTime, filter, map, of, switchMap, tap } from 'rxjs';
+import { catchError, debounceTime, filter, map, Observable, of, switchMap, tap } from 'rxjs';
+
+interface AutocompleteDataSource {
+  label: string,
+  bindValue: string,
+  bindLabel: string,
+  minLength: number,
+  debounceTime: number
+  search(q: string): Observable<any>
+}
+
 
 interface AutocompleteInterface {
   label: string,
@@ -41,7 +51,7 @@ export class Autocomplete implements OnInit {
 
   private readonly httpClient = inject(HttpClient)
 
-  @Input({required: true}) config!: AutocompleteInterface
+  @Input({required: true}) config!: AutocompleteInterface | AutocompleteDataSource
   @Output('select') select = new EventEmitter<any>();
 
   public control = new FormControl<string>('')
@@ -66,9 +76,13 @@ export class Autocomplete implements OnInit {
         this.items.set([])
       }),
       switchMap(value => {
-        return this.httpClient.get<any>(this.config.url, {params: new HttpParams().set('q', value)}).pipe(
-          catchError(() => of([]))
-        )
+
+        if((this.config as AutocompleteInterface)?.url != undefined) {
+          return this.httpClient.get<any>((this.config as AutocompleteInterface).url, {params: new HttpParams().set('q', value)}).pipe(catchError(() => of([])))
+        } else {
+          return (this.config as AutocompleteDataSource).search(value)
+        }
+
       }),
       tap(_ => this.loading.set(false))
     )
