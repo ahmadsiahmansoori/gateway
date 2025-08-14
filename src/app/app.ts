@@ -10,4 +10,6 @@ import { Autocomplete } from "./autocomplete/autocomplete";
 })
 export class App {
   protected readonly title = signal('gateway');
+
+  public readonly autocompleteDataSource = null;
 }
