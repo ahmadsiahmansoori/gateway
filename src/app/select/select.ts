@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 
 export interface SelectInterface {
-
+  label: string,
+  bindLabel: string,
+  bindValue: string,
+  multiple?: boolean
 }
 
 
@@ -13,6 +16,12 @@ export interface SelectInterface {
   styleUrl: './select.css'
 })
 export class Select {
+
+
+
+  @Input({required: true}) config!: SelectInterface
+  @Input({required: true}) options: any[] = [];
+  @Input({required: false}) value: any;
 
 
 
