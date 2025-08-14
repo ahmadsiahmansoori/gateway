@@ -51,13 +51,6 @@ export class Autocomplete implements OnInit {
 
   public displayFn = (item: any) => item?.[this.config.bindLabel] || ''
 
-
-  selectOption(event: any) {
-    console.log(event.option.value[this.config.bindValue],event.option.value , 'select');
-
-    this.select.emit(event.option.value[this.config.bindValue]);
-  }
-
   ngOnInit(): void {
     this.control.valueChanges
     .pipe(
