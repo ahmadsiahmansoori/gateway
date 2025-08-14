@@ -10,15 +10,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { catchError, debounceTime, filter, map, Observable, of, switchMap, tap } from 'rxjs';
+import { AutocompleteDataSource } from '../interfaces/AutocompleteDataSource';
 
-interface AutocompleteDataSource {
-  label: string,
-  bindValue: string,
-  bindLabel: string,
-  minLength: number,
-  debounceTime: number
-  search(q: string): Observable<any>
-}
+
 
 
 interface AutocompleteInterface {

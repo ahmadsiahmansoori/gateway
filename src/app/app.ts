@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Autocomplete } from "./autocomplete/autocomplete";
+import { ItemService } from './services/item-service';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +12,5 @@ import { Autocomplete } from "./autocomplete/autocomplete";
 export class App {
   protected readonly title = signal('gateway');
 
-  public readonly autocompleteDataSource = null;
+  public readonly autocompleteDataSource = inject(ItemService);
 }
