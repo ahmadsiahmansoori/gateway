@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { DatePicker } from "./date-picker/date-picker";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [DatePicker],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
