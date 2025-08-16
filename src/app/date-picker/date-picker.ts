@@ -6,12 +6,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { PERSIAN_DATE_FORMATS } from '../app.config';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { JalaliMomentDateAdapter } from '../JalaliMomentDateAdapter';
 
 
-
+export const PERSIAN_DATE_FORMATS = { parse: { dateInput: 'YYYY/MM/DD' }, display: { dateInput: 'YYYY/MM/DD', monthYearLabel: 'YYYY MMM', dateA11yLabel: 'YYYY/MM/DD', monthYearA11yLabel: 'YYYY MMMM', }, };
 
 @Component({
   selector: 'app-date-picker',
