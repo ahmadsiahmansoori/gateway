@@ -1,6 +1,7 @@
-import { Inject, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import * as moment from 'jalali-moment';
+import moment from 'jalali-moment';
+
 import { MatMomentDateAdapterOptions, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 /**
@@ -17,6 +18,8 @@ function range<T>(length: number, valueFunction: (index: number) => T): T[] {
   return valuesArray;
 }
 
+@Injectable({ providedIn: 'root' })
+
 export class JalaliMomentDateAdapter extends DateAdapter<moment.Moment> {
   private _localeData!: {
     firstDayOfWeek: number;
@@ -29,11 +32,11 @@ export class JalaliMomentDateAdapter extends DateAdapter<moment.Moment> {
   };
 
   constructor(
-    @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string,
+    @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string = moment.locale('fa'),
     @Optional() @Inject(MAT_MOMENT_DATE_ADAPTER_OPTIONS) private _options?: MatMomentDateAdapterOptions
   ) {
     super();
-    this.setLocale(dateLocale || moment.locale('fa'));
+    this.setLocale(dateLocale);
   }
 
   /**
