@@ -6,6 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { PERSIAN_DATE_FORMATS } from '../app.config';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { JalaliMomentDateAdapter } from '../JalaliMomentDateAdapter';
 
 
 
@@ -19,7 +22,12 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     ReactiveFormsModule
   ],
-
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'fa' },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: false, strict: true } },
+    { provide: DateAdapter, useClass: JalaliMomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+    { provide: MAT_DATE_FORMATS, useValue: PERSIAN_DATE_FORMATS }
+  ],
   templateUrl: './date-picker.html',
   styleUrl: './date-picker.css'
 })
