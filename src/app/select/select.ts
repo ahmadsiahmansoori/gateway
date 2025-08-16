@@ -40,7 +40,6 @@ export class Select<T = any>  implements OnInit{
   }
 
   select(item: any) {
-
     this.valueChange.emit(item)
   }
 
