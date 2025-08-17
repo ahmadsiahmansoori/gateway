@@ -1,7 +1,5 @@
 import { Component, Input, input, output } from '@angular/core';
-
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { MatDateFormats } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
@@ -9,6 +7,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { JalaliMomentDateAdapter } from '../JalaliMomentDateAdapter';
 
+import moment from 'jalali-moment';
 
 export const PERSIAN_DATE_FORMATS = { parse: { dateInput: 'YYYY/MM/DD' }, display: { dateInput: 'YYYY/MM/DD', monthYearLabel: 'YYYY MMM', dateA11yLabel: 'YYYY/MM/DD', monthYearA11yLabel: 'YYYY MMMM', }, };
 
@@ -32,32 +31,37 @@ export const PERSIAN_DATE_FORMATS = { parse: { dateInput: 'YYYY/MM/DD' }, displa
 })
 export class DatePicker {
 
-  startDate = new Date(2025, 6, 12); // (year, monthIndex, day) -- Gregorian date
 
 
   label = input.required<string>()
-  control = new FormControl<string>('')
+  control = new FormControl()
   valueChange = output<string>()
 
   @Input({required: false})
   set value(date: string) {
-    this.control.setValue(date)
+    const gDate = moment(date, 'jYYYY/jMM/jDD').toDate();
+    this.control.setValue(gDate)
   }
 
-  @Input({required: false})
-  set initValue(ok: boolean){
-    const date = new globalThis.Date().toLocaleDateString('fa-IR');
-    if(ok === true) {
-      this.control.setValue(date)
-    }
-
-  }
+  @Input({required: false}) initValue: boolean = false
 
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.control.valueChanges.subscribe(data => this.valueChange.emit((data as string)))
+    this.control.valueChanges.subscribe(date =>{
+      if (!date) {
+        this.valueChange.emit('');
+        return;
+      }
+      const jDate = moment(date).locale('fa').format('jYYYY/jMM/jDD');
+      this.valueChange.emit(jDate);
+
+    })
+
+
+
+    if(this.initValue === true) {
+      this.control.setValue(new globalThis.Date())
+    }
   }
 
 

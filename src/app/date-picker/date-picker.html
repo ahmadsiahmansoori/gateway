@@ -1,6 +1,6 @@
 <mat-form-field>
-  <mat-label>تاریخ</mat-label>
-  <input matInput [matDatepicker]="picker"  placeholder="تاریخ را انتخاب کنید">
+  <mat-label>{{label()}}</mat-label>
+  <input matInput [matDatepicker]="picker" readonly [formControl]="control">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
