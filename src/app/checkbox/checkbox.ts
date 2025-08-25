@@ -1,9 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-checkbox',
-  imports: [],
+  imports: [
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatFormFieldModule
+  ],
   templateUrl: './checkbox.html',
   styleUrl: './checkbox.css'
 })
@@ -13,7 +19,7 @@ export class Checkbox {
   @Input({required:true}) label: string = ''
   @Input({required: false}) disabled = false;
 
-  @Input() control?: FormControl;
+  @Input() control!: FormControl;
 
   @Input() checked?: boolean;
   @Output() checkedChange = new EventEmitter<boolean>();
@@ -24,14 +30,12 @@ export class Checkbox {
     if (!this.control) {
       this.control = new FormControl(this.checked || false);
     }
+
+    this.control.valueChanges.subscribe(e => this.checkedChange.emit(e))
   }
 
   onChange(value: boolean) {
-    if (this.control) {
-      this.control.setValue(value);
-    } else {
-      this.checkedChange.emit(value);
-    }
+    this.control.setValue(value);
   }
 
 
