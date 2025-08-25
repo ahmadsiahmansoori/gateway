@@ -18,6 +18,8 @@ export class Checkbox {
   @Input() checked?: boolean;
   @Output() checkedChange = new EventEmitter<boolean>();
 
+
+
   ngOnInit(): void {
     if (!this.control) {
       this.control = new FormControl(this.checked || false);
@@ -25,9 +27,10 @@ export class Checkbox {
   }
 
   onChange(value: boolean) {
-    this.checkedChange.emit(value);
     if (this.control) {
       this.control.setValue(value);
+    } else {
+      this.checkedChange.emit(value);
     }
   }
 
