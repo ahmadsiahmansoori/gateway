@@ -1,4 +1,4 @@
-<mat-form-field class="w-100">
+<mat-form-field class="w-100" dir="rtl">
   <mat-label>{{ config().label }}</mat-label>
   <mat-select [multiple]="config().multiple || false" [formControl]="control" >
     <mat-option *ngFor="let topping of options()" [value]="topping[config().bindValue]">
